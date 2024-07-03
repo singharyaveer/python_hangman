@@ -9,59 +9,92 @@ print(" ")
 # main game loop
 def main() -> None:
 
-    #list of random words
-    words : list[str] = [
-        "animal", "beach", "candle", "desert", "effort",
-        "friend", "garden", "honor", "island", "jungle",
-        "kettle", "leader", "market", "nature", "office",
-        "planet", "quartz", "reason", "season", "trophy",
-        "unicorn", "vessel", "wonder", "yellow", "access",
-        "butter", "crisis", "driver", "engine", "forest",
-        "ground", "health", "income", "jacket", "keeper",
-        "lesson", "museum", "nation", "object", "person",
-        "quiver", "region", "school", "ticket", "useful",
-        "vortex", "window", "youth", "action", "bridge",
-        "custom", "doctor", "engine", "future", "growth",
-        "hotel", "impact", "jewels", "kidney", "letter",
-        "mythic", "notion", "outlet", "profit", "rescue",
-        "signal", "tablet", "united", "voyage", "writer",
-        "zenith", "advice", "bucket", "chance", "debate",
-        "effort", "family", "garage", "honest", "import",
-        "jigsaw", "knight", "liquid", "mentor", "number",
-        "option", "policy", "ribbon", "spirit", "throne",
-        "urgent", "victor", "whaler", "yields", "agency",
-        "branch", "cousin", "dollar", "editor", "flavor",
-        "guitar", "hunger", "injury", "kitten", "lawyer",
-        "member", "normal", "origin", "pencil", "radius",
-        "soccer", "temple", "update", "vision", "weapon",
-        "yellow", "artist", "breath", "circle", "danger",
-        "effect", "future", "gravel", "humane", "intent",
-        "jumper", "kitchen", "legacy", "margin", "oceanic",
-        "parcel", "quaint", "beauty", "canvas", "desire",
-        "escape", "fabric", "galaxy", "helmet", "impact",
-        "jargon", "kitten", "legacy", "motion", "object"
-    ]
+    # dictionary containing all words and hints
+    word_dict : dict[str:str] = {
+        "elegant": "Stylish and graceful",
+        "freedom": "The power to act, speak, or think without hindrance",
+        "harmony": "Agreement or concord",
+        "passion": "Strong and barely controllable emotion",
+        "victory": "The defeat of an enemy or opponent",
+        "journey": "The act of traveling from one place to another",
+        "inspired": "Filled with the urge or ability to do or feel something",
+        "treasure": "A quantity of precious metals, gems, or other valuable objects",
+        "laughter": "The action or sound of laughing",
+        "whisper": "To speak very softly using one's breath",
+        "blossom": "A flower or a mass of flowers on a tree or bush",
+        "mystery": "Something that is difficult or impossible to understand or explain",
+        "fantasy": "The faculty or activity of imagining things, especially things that are impossible or improbable",
+        "symphony": "An elaborate musical composition for full orchestra",
+        "creative": "Relating to or involving the use of the imagination or original ideas",
+        "adventure": "An unusual and exciting or daring experience",
+        "brilliant": "Exceptionally clever or talented",
+        "charming": "Pleasing or delightful",
+        "happiness": "The state of being happy",
+        "sparkling": "Shining brightly with flashes of light",
+        "radiant": "Sending out light; shining or glowing brightly",
+        "wonderful": "Inspiring delight, pleasure, or admiration; extremely good",
+        "courageous": "Not deterred by danger or pain; brave",
+        "fascinate": "Draw irresistibly the attention and interest of (someone)",
+        "vibrant": "Full of energy and life",
+        "captivate": "Attract and hold the interest and attention of; charm",
+        "enchanted": "Under a spell; magical",
+        "serenity": "The state of being calm, peaceful, and untroubled",
+        "glistening": "Shining with a sparkling light",
+        "effervescent": "Bubbling, fizzy; vivacious and enthusiastic",
+        "admirable": "Deserving respect and approval",
+        "whimsical": "Playfully quaint or fanciful, especially in an appealing and amusing way",
+        "spectacular": "Beautiful in a dramatic and eye-catching way",
+        "fantastic": "Extraordinarily good or attractive",
+        "exquisite": "Extremely beautiful and, typically, delicate",
+        "delightful": "Greatly pleasing or entertaining",
+        "magnificent": "Very beautiful, elaborate, or impressive",
+        "harmonious": "Forming a pleasing or consistent whole",
+        "radiance": "Light or heat as emitted or reflected by something",
+        "passionate": "Showing or caused by strong feelings or a strong belief",
+        "inspiring": "Having the effect of inspiring someone",
+        "celestial": "Belonging or relating to heaven",
+        "glorious": "Having, worthy of, or bringing fame or admiration",
+        "tranquil": "Free from disturbance; calm",
+        "brilliance": "Intense brightness of light",
+        "wanderlust": "A strong desire to travel",
+        "ecstasy": "An overwhelming feeling of great happiness or joyful excitement",
+        "majestic": "Having or showing impressive beauty or dignity",
+        "enchantment": "A feeling of great pleasure; delight",
+        "captivating": "Attracting and holding interest as if by a spell",
+        "fascination": "The power to fascinate someone; the quality of being fascinating",
+        "whispering": "Speaking in a soft voice, especially to avoid being overheard",
+        "mystical": "Relating to mystics or religious mysticism",
+        "splendid": "Magnificent; very impressive",
+        "adventurous": "Willing to take risks or to try out new methods, ideas, or experiences",
+        "enigmatic": "Difficult to interpret or understand; mysterious",
+        "sparklingly": "In a sparkling manner; with glittering or flashing lights",
+        "bewitching": "Enchanting; charming in a mysterious way",
+        "serenely": "In a calm, peaceful, and untroubled manner",
+        "exhilarating": "Making one feel very happy, animated, or elated",
+        "radiantly": "In a radiant manner; with a glowing brightness",
+        "blossoming": "Developing or maturing into something greater or more mature",
+        "charismatic": "Exercising a compelling charm that inspires devotion in others",
+    }
 
-
-    
     play : str = "Y"
     chances : int = 6
     wrongCharsAndWordsGuessed : list[str]= []
     correctCharsGuessed : list[str] = []
 
-    
-
     while play == "Y":
 
-       word : str = random.choice(words)
-
+       word : str = random.choice(list(word_dict.keys()))
+    
        while True:
            print_hangman(chances)
-           print(f"Your word: {returnPrintableWord(word,correctCharsGuessed)}")
+           print(f"Your word: {' '.join(returnPrintableWord(word,correctCharsGuessed))}")
+           print(" ")
+           print(f"Hint: {word_dict[word]}")
            print(" ")
            print(f"Your chances left: {chances}")
            print(" ")
            guess : str = input("Enter your guess (Letter or Word): ").lower()
+           print(" ")
            
 
            if len(guess) > 1:
@@ -73,7 +106,7 @@ def main() -> None:
                elif guess == word:
                    print("YOU HAVE WON THE GAME")
                    print(f"THE WORD IS {word}")
-                   words.remove(word)
+                   del word_dict[word]
                    wrongCharsAndWordsGuessed = []
                    correctCharsGuessed = []
                    chances = 6
@@ -109,7 +142,7 @@ def main() -> None:
                    if returnPrintableWord(word,correctCharsGuessed) == word:
                        print("YOU HAVE WON THE GAME")
                        print(f"THE WORD IS {word}")
-                       words.remove(word)
+                       del word_dict[word]
                        wrongCharsAndWordsGuessed = []
                        correctCharsGuessed = []
                        chances = 6
